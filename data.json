@@ -1,0 +1,27 @@
+{
+  "knowledge_base": {
+    "policy_billing": "Standard tier customers can request a receipt for up to 30 days past the purchase date.",
+    "policy_technical": "Error Code 404 on the dashboard means the user's cache must be cleared. Instruct them to clear cache.",
+    "policy_refund": "Refunds are strictly prohibited for digital items once they have been downloaded, even if the customer is angry."
+  },
+  "tasks": {
+    "easy": {
+      "ticket_id": "TKT-101",
+      "customer_tier": "Standard",
+      "initial_message": "Hello, I bought the software yesterday. Can you send me my billing receipt?",
+      "expected_category": "Billing"
+    },
+    "medium": {
+      "ticket_id": "TKT-202",
+      "customer_tier": "VIP",
+      "initial_message": "My dashboard is broken. Every time I log in, I just get an Error Code 404.",
+      "expected_category": "Technical"
+    },
+    "hard": {
+      "ticket_id": "TKT-303",
+      "customer_tier": "Standard",
+      "initial_message": "This digital eBook is terrible! I already downloaded and read it, but I demand a full refund right now or I'm leaving a bad review!",
+      "expected_category": "Refund_Request"
+    }
+  }
+}
