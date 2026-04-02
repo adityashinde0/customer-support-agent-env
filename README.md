@@ -1,3 +1,14 @@
+---
+title: Support Buddy Env
+emoji: 🤖
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+tags:
+  - openenv
+---
+
 # customer-support-agent-env
 # Customer Support Resolution OpenEnv
 
