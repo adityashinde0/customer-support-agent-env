@@ -74,9 +74,7 @@ def home():
             .btn-secondary:hover { background-color: #475569; }
             .controls { display: flex; gap: 10px; margin-top: 20px; }
             .status-box { background: #f1f5f9; padding: 15px; border-radius: 6px; margin-top: 20px; font-family: monospace; font-size: 14px; line-height: 1.5; }
-            .observation-clean { background: #f8fafc; border: 1px solid var(--border); padding: 15px; border-radius: 6px; min-height: 100px; font-size: 14px; line-height: 1.6; }
-            .history-log { background: #1e293b; color: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 20px; height: 300px; overflow-y: auto; font-family: monospace; font-size: 13px; }
-            .log-entry { margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+            .observation-clean { background: #f8fafc; border: 1px solid var(--border); padding: 15px; border-radius: 6px; min-height: 100px; max-height: 250px; overflow-y: auto; font-size: 14px; line-height: 1.6; }            .log-entry { margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
             .log-action { color: #38bdf8; }
             .log-reward { color: var(--success); font-weight: bold; }
             .hidden { display: none; }
