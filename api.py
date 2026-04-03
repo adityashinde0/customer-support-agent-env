@@ -54,7 +54,7 @@ def home():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Support Buddy OpenEnv</title>
+        <title>Customer Support OpenEnv</title>
         <style>
             :root { --primary: #2563eb; --bg: #f8fafc; --panel: #ffffff; --text: #1e293b; --border: #e2e8f0; --success: #22c55e; --danger: #ef4444; }
             body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; }
@@ -84,7 +84,7 @@ def home():
     <body>
         <div style="width: 100%; max-width: 1200px;">
             <div class="header-bar">
-                <h1 style="margin: 0; font-size: 24px;">🎧 Support Buddy Interface</h1>
+                <h1 style="margin: 0; font-size: 24px;">🎧 Customer Support Interface</h1>
                 <a href="/docs" class="docs-btn" target="_blank">View API Documentation ↗</a>
             </div>
 
@@ -182,7 +182,10 @@ def home():
                 if (state.conversation_history && state.conversation_history.length > 0) {
                     obsHtml += `<strong>Conversation:</strong><br>`;
                     state.conversation_history.forEach(msg => {
-                        obsHtml += `<em>${msg.sender}:</em> ${msg.content}<br>`;
+                        // FIX: Safely check for role/sender and content/text depending on your Python models
+                        const speaker = msg.role || msg.sender || "User";
+                        const text = msg.content || msg.text || msg.message || "";
+                        obsHtml += `<em>${speaker}:</em> ${text}<br>`;
                     });
                 }
                 document.getElementById('obsDisplay').innerHTML = obsHtml;
@@ -192,9 +195,17 @@ def home():
                 const logDiv = document.getElementById('historyLog');
                 const entry = document.createElement('div');
                 entry.className = 'log-entry';
+                
+                // FIX: If the reward is a dictionary, stringify it so it prints beautifully!
+                let rewardText = reward;
+                if (typeof reward === 'object' && reward !== null) {
+                    // If it has a specific score/reason format, you can also format it like: reward.score + " | " + reward.reason
+                    rewardText = JSON.stringify(reward); 
+                }
+
                 entry.innerHTML = `
                     <div class="log-action">Action: ${JSON.stringify(actionPayload)}</div>
-                    <div class="log-reward">Reward: ${reward !== null ? reward : 0} ${done ? ' [EPISODE FINISHED]' : ''}</div>
+                    <div class="log-reward">Reward: ${rewardText !== null ? rewardText : 0} ${done ? ' [EPISODE FINISHED]' : ''}</div>
                 `;
                 logDiv.prepend(entry);
             }
