@@ -45,7 +45,16 @@ The environment evaluates agents across 6 dynamically loaded tasks with varying 
 
 **1. Clone and Install**
 ```bash
-git clone [https://huggingface.co/spaces/Adityashinde0/customer-support-openenv](https://huggingface.co/spaces/Adityashinde0/customer-support-openenv)
+git clone [https://huggingface.co/spaces/YOUR_USERNAME/customer-support-openenv](https://huggingface.co/spaces/YOUR_USERNAME/customer-support-openenv)
 cd customer-support-openenv
 pip install -r requirements.txt
-BASELINE AVERAGE SCORE: 0.98 / 1.0
+2. Set Environment Variables
+The inference script uses the OpenAI client format.
+export API_BASE_URL="[https://api-inference.huggingface.co/v1/](https://api-inference.huggingface.co/v1/)"
+export MODEL_NAME="Qwen/Qwen2.5-72B-Instruct"
+export HF_TOKEN="your_huggingface_token"
+3. Run the Baseline Agent
+python inference.py
+📊 Baseline Scores
+Model Evaluated: Qwen/Qwen2.5-72B-Instruct
+Average Baseline Score: 0.98 / 1.0
