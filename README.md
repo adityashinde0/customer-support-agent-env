@@ -1,5 +1,5 @@
 ---
-title: Support Buddy Env
+title: customer-support-openenv
 emoji: 🤖
 colorFrom: blue
 colorTo: green
