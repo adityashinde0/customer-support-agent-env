@@ -1,8 +1,10 @@
-name: "Customer Support Resolution Environment"
-description: "A multi-step environment simulating a customer support agent. The agent must interact with a knowledge base to resolve billing, technical, and escalation tickets."
-version: "1.0.0"
-env_class: "environment:CustomerSupportEnv"
-tasks:
-  - "easy"
-  - "medium"
-  - "hard"
+version: "1.0"
+project:
+  name: "customer-support-openenv"
+  description: "A real-world Customer Support simulation where an AI agent resolves tickets via KB searches and clarification."
+  tags:
+    - customer-support
+    - nlp
+    - openenv
+environment:
+  entrypoint: "environment:CustomerSupportEnv"
