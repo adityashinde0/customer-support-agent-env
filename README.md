@@ -58,5 +58,4 @@ python inference.py
 ```
 **📊 Baseline Scores**
 Model Evaluated: Qwen/Qwen2.5-72B-Instruct
-
-###Average Baseline Score: 0.98 / 1.0.
+**Average Baseline Score: 0.98 / 1.0.**
