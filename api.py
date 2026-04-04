@@ -173,8 +173,8 @@ nav{
   border:2px solid var(--black);
 }
 .nav-docs{
-  font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  padding:6px 16px;border-radius:100px;
+  font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:12px 28px;border-radius:100px;
   background:var(--black);color:#fff;
   text-decoration:none;transition:all 0.3s var(--bounce);
   border:2px solid var(--black);
@@ -378,7 +378,7 @@ nav{
 .playground{padding:80px 48px;border-bottom:3px solid var(--black)}
 .playground .section-header{text-align:center;margin-bottom:48px}
 
-.pg-grid{display:grid;grid-template-columns:380px 1fr;gap:3px;border:3px solid var(--black);border-radius:12px;overflow:hidden}
+.pg-grid{display:grid;grid-template-columns:540px 1fr;gap:3px;border:3px solid var(--black);border-radius:12px;overflow:hidden}
 
 /* LEFT CONTROLS */
 .pg-left{background:var(--gray);border-right:3px solid var(--black);display:flex;flex-direction:column}
@@ -485,14 +485,15 @@ select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0, 2
 }
 
 /* RIGHT CONVO */
-.pg-right{display:flex;flex-direction:column;background:#fff;min-height:600px}
+.pg-right{display:flex;flex-direction:column;background:#fff;height:900px;}
 
 .convo-area{
-  flex:1;overflow-y:auto;padding:28px;display:flex;flex-direction:column;gap:14px;min-height:0;
+  flex:1;overflow-y:scroll;padding:28px;display:flex;flex-direction:column;gap:14px;min-height:0;
 }
 /* Cool custom scrollbar for GenZ vibe */
 .convo-area::-webkit-scrollbar {
   width: 8px;
+  display: block;
 }
 .convo-area::-webkit-scrollbar-track {
   background: var(--gray);
@@ -540,10 +541,11 @@ select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0, 2
 .mtext.sys{background:var(--gray2);border-color:var(--gray2);color:#555;font-size:12px}
 
 /* REWARD LOG */
-.rlog{border-top:3px solid var(--black);background:var(--gray);max-height:220px;overflow-y:auto}
-.rlog::-webkit-scrollbar { width: 6px; }
-.rlog::-webkit-scrollbar-track { background: transparent; }
-.rlog::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+.rlog{border-top:3px solid var(--black);background:var(--gray);height:500px;min-height:500px;overflow-y:scroll;width:100%;box-sizing:border-box;flex-shrink:0;}
+.rlog::-webkit-scrollbar { width: 8px; display:block; }
+.rlog::-webkit-scrollbar-track { background: var(--gray); border-radius: 8px; }
+.rlog::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 8px; border: 2px solid var(--gray); }
+.rlog::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
 
 .rlog-head{
   padding:12px 24px;border-bottom:2px solid var(--black);
