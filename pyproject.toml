@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "customer-support-openenv"
+version = "1.0.0"
+description = "A real-world Customer Support OpenEnv simulation"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Hrushikesh Sarode & Aditya Shinde" }
+]
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openai",
+    "openenv-core"
+]
+[project.scripts]
+server = "server.app:main"
