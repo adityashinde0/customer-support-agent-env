@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from environment import CustomerSupportEnv
-from models import Action
+from models import Action, Observation
 
 app = FastAPI(title="Customer Support OpenEnv API")
 env_instance = CustomerSupportEnv()
@@ -29,6 +29,49 @@ def get_current_state():
     if env_instance.obs is None:
         raise HTTPException(status_code=400, detail="Environment has not been initialized. Call /reset.")
     return {"observation": env_instance.state()}
+
+# ==========================================
+# OPENENV VALIDATION ENDPOINTS (HACKATHON)
+# ==========================================
+
+@app.get("/health")
+def health_check():
+    """Simple health check for the validator."""
+    return {"status": "healthy"}
+
+@app.get("/metadata")
+def get_metadata():
+    """Returns environment metadata."""
+    return {
+        "name": "customer-support-openenv",
+        "description": "A real-world Customer Support OpenEnv simulation",
+        "version": "1.0.0",
+        "tags": ["customer-support", "nlp", "openenv"]
+    }
+
+@app.get("/schema")
+def get_schema():
+    """Returns the JSON schemas for the environment's Pydantic models."""
+    return {
+        "action": Action.model_json_schema(),
+        "observation": Observation.model_json_schema(),
+        "state": Observation.model_json_schema()
+    }
+
+@app.post("/mcp")
+async def mcp_endpoint(request: Request):
+    """Minimal JSON-RPC 2.0 response to satisfy validator MCP checks."""
+    try:
+        body = await request.json()
+        req_id = body.get("id")
+    except Exception:
+        req_id = None
+        
+    return {
+        "jsonrpc": "2.0", 
+        "id": req_id, 
+        "result": {}
+    }
 
 @app.get("/", response_class=HTMLResponse)
 def home():
