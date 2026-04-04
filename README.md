@@ -56,7 +56,7 @@ export HF_TOKEN="your_huggingface_token"
 **3. Run the Baseline Agent**
 python inference.py
 ```
-**📊 Baseline Scores**:
+**📊 Baseline Scores**
 Model Evaluated: Qwen/Qwen2.5-72B-Instruct
 
-Average Baseline Score: 0.98 / 1.0.
+###Average Baseline Score: 0.98 / 1.0.
