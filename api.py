@@ -893,7 +893,7 @@ footer{
 </section>
 
 <footer>
-  <div class="foot-logo">SupportEnv</div>
+  <div class="foot-logo">Customer Support Openenv</div>
   <div class="foot-text">Built for the OpenEnv Hackathon 2024</div>
   <div class="foot-devs">Developed by <span>Hrushikesh Sarode</span> & <span>Aditya Shinde</span></div>
   <div class="foot-links">
