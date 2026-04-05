@@ -167,6 +167,7 @@ The baseline script (`inference.py`) uses OpenAI client format and required envi
 - `HF_TOKEN` : Hugging Face / API key
 - `API_BASE_URL` : API endpoint base URL
 - `MODEL_NAME` : model identifier
+- `BENCHMARK_NAME` : benchmark label printed in `[START]` output (default: `customer-support-openenv`)
 
 ### Linux/macOS example
 ```bash
@@ -185,7 +186,19 @@ python inference.py
 ```
 
 ### Expected output
-The script prints per-episode progress and final average baseline score.
+The script prints strict per-episode lines to `stdout`:
+
+```text
+[START] task=<task_name> env=<benchmark> model=<model_name>
+[STEP]  step=<n> action=<action_str> reward=<0.00> done=<true|false> error=<msg|null>
+[END]   success=<true|false> steps=<n> rewards=<r1,r2,...,rn>
+```
+
+Notes:
+- `reward` and `rewards` use 2 decimal places.
+- `done` and `success` are lowercase booleans.
+- each output is a single line (no embedded newlines).
+- baseline average score is printed to `stderr` to keep `stdout` format strict.
 
 ### Baseline result (current)
 - Model: `Qwen/Qwen2.5-72B-Instruct`

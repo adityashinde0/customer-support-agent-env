@@ -99,3 +99,7 @@ class CustomerSupportEnv:
     def state(self) -> Observation:
         """Returns the current state without taking an action."""
         return self.obs
+
+    def close(self) -> None:
+        """No-op close for compatibility with inference runner contracts."""
+        return None
