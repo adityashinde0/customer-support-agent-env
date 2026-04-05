@@ -485,7 +485,7 @@ select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0, 2
 }
 
 /* RIGHT CONVO */
-.pg-right{display:flex;flex-direction:column;background:#fff;height:520px;}
+.pg-right{display:flex;flex-direction:column;background:#fff;height:700px;}
 
 .convo-area{
   flex:1;overflow-y:scroll;padding:28px;display:flex;flex-direction:column;gap:14px;min-height:0;
@@ -540,7 +540,7 @@ select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0, 2
 .mtext.sys{background:var(--gray2);border-color:var(--gray2);color:#555;font-size:12px}
 
 /* REWARD LOG */
-.rlog{border-top:3px solid var(--black);background:var(--gray);height:200px;min-height:200px;overflow-y:scroll;width:100%;box-sizing:border-box;flex-shrink:0;}
+.rlog{border-top:3px solid var(--black);background:var(--gray);height:310px;min-height:200px;overflow-y:scroll;width:100%;box-sizing:border-box;flex-shrink:0;}
 .rlog::-webkit-scrollbar { width: 8px; display:block; }
 .rlog::-webkit-scrollbar-track { background: var(--gray); border-radius: 8px; }
 .rlog::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 8px; border: 2px solid var(--gray); }
