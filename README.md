@@ -15,6 +15,8 @@ tags:
 
 A real-world OpenEnv simulation where an agent must handle customer support tickets using structured actions, policy lookup, and deterministic grading.
 
+cheak the [Presentation](https://www.dropbox.com/scl/fi/mraroynl2t5nk7deqylqf/CustomerSupport_OpenEnv.pdf?rlkey=1fojgd4l0d29690ledvi2svu0&st=vges4r09&dl=0)
+
 ## Live Space
 
 - Space page: `https://huggingface.co/spaces/Adityashinde0/customer-support-openenv`
