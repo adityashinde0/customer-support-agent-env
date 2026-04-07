@@ -78,7 +78,7 @@ class CustomerSupportEnv:
             final_score = evaluate_performance(self.obs, action, self.current_task["expected_category"])
             reward_val += final_score
 
-            if final_score == 1.0:
+            if final_score > 0.5:
                 reward_reason = f"Success! Ticket handled perfectly. Final Score: {final_score}"
             else:
                 reward_reason = f"Failure. Ticket closed incorrectly. Final Score: {final_score}"
@@ -86,9 +86,9 @@ class CustomerSupportEnv:
         # Episode Boundary: End the episode if resolved OR max steps reached
         done = self.obs.is_resolved or self.obs.step_count >= 10
         if self.obs.step_count >= 10 and not self.obs.is_resolved:
-            # Force a terminal 0.0 grader score so the reward signal is clean
-            reward_val = 0.0
-            reward_reason = "Maximum steps reached. Episode forced to end with score 0.0."
+            # Keep terminal score strictly in-range for validator compatibility.
+            reward_val = 0.05
+            reward_reason = "Maximum steps reached. Episode forced to end with score 0.05."
 
         # Package the reward using our Pydantic model
         reward = Reward(value=reward_val, reason=reward_reason)

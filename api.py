@@ -1029,14 +1029,14 @@ function logHistory(actionPayload, reward, done) {
         rewardValNum = parseFloat(reward.value) || 0;
         if (reward.value !== undefined && reward.reason !== undefined) {
             let color = reward.value >= 0 ? '#22c55e' : '#ef4444'; 
-            rewardText = `<span style="color:${color}; font-weight:bold;">Reward: ${reward.value}</span> | <span style="color:#94a3b8; font-weight:normal;">Reason: ${reward.reason}</span>`;
+            rewardText = `<span style="color:${color}; font-weight:bold;">Reward: ${rewardValNum.toFixed(2)}</span> | <span style="color:#94a3b8; font-weight:normal;">Reason: ${reward.reason}</span>`;
         } else {
             rewardText = JSON.stringify(reward); 
         }
     } else {
         rewardValNum = parseFloat(reward) || 0;
         let color = rewardValNum >= 0 ? '#22c55e' : '#ef4444'; 
-        rewardText = `<span style="color:${color}; font-weight:bold;">Reward: ${rewardValNum}</span>`;
+        rewardText = `<span style="color:${color}; font-weight:bold;">Reward: ${rewardValNum.toFixed(2)}</span>`;
     }
 
     // Translate the raw JSON Action into beautiful English Badges!
