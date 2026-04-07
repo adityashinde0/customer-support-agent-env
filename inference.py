@@ -44,9 +44,12 @@ def _bool_str(value: bool) -> str:
 def _fmt_reward(value: float) -> str:
     return f"{value:.2f}"
 
+MIN_VALID_SCORE = 0.01  # 1.0%
+MAX_VALID_SCORE = 0.99  # 99.0%
+
 def _safe_score(value: float) -> float:
     # Keep printed scores strictly inside (0, 1) even after 2-decimal formatting.
-    return round(min(max(float(value), 0.01), 0.99), 2)
+    return round(min(max(float(value), MIN_VALID_SCORE), MAX_VALID_SCORE), 2)
 
 def _sanitize_single_line(text: str) -> str:
     return str(text).replace("\r", " ").replace("\n", " ")

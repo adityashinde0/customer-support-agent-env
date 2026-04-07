@@ -102,8 +102,8 @@ The environment currently defines 6 tasks with easy/medium/hard progression and 
 
 The grader is deterministic and returns task scores strictly inside `(0, 1)` to match validator requirements.
 
-- `0.95` for correct terminal handling according to task policy and expected category.
-- `0.05` for incorrect terminal handling.
+- `0.9` for correct terminal handling according to task policy and expected category.
+- `0.1` for incorrect terminal handling.
 - Trajectory rewards additionally include partial progress and penalties (classification quality, KB usage, step efficiency).
 - Maximum episode length is bounded to prevent loop exploitation.
 

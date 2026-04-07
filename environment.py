@@ -37,9 +37,9 @@ class CustomerSupportEnv:
         self.obs.step_count += 1
         self.obs.last_action_error = None
 
-        # Keep per-step rewards strictly inside (0, 1). This avoids validator
-        # failures whether it reads terminal or cumulative task scores.
-        reward_val = 0.001
+        # Keep per-step rewards strictly inside (0, 1) with 2-decimal-safe
+        # values to avoid downstream rounding to 0.00.
+        reward_val = 0.01
         reward_reason = "Neutral in-range step reward."
 
         # Logic for searching the Knowledge Base
@@ -51,24 +51,24 @@ class CustomerSupportEnv:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_technical"]
             else:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_refund"]
-            reward_val = 0.002
+            reward_val = 0.01
             reward_reason = "In-range reward: Successfully queried the knowledge base."
 
         # Logic for asking a question
         elif action.action_type == "ask_clarifying_question":
             self.obs.conversation_history.append(f"Agent: {action.message_to_customer}")
             self.obs.conversation_history.append("Customer: Please just fix my issue based on my first message.")
-            reward_val = 0.001
+            reward_val = 0.01
             reward_reason = "In-range reward: Asked a clarifying question."
 
         # Logic for classifying the ticket
         elif action.action_type == "classify_issue":
             self.obs.issue_category = action.category_guess
             if action.category_guess == self.current_task["expected_category"]:
-                reward_val = 0.003
+                reward_val = 0.01
                 reward_reason = "In-range reward: Correctly classified the issue."
             else:
-                reward_val = 0.001
+                reward_val = 0.01
                 reward_reason = "In-range reward: Incorrect classification."
 
         # Logic for ending the conversation (Resolve or Escalate)
@@ -89,8 +89,8 @@ class CustomerSupportEnv:
         done = self.obs.is_resolved or self.obs.step_count >= 10
         if self.obs.step_count >= 10 and not self.obs.is_resolved:
             # Keep terminal score strictly in-range for validator compatibility.
-            reward_val = 0.05
-            reward_reason = "Maximum steps reached. Episode forced to end with score 0.05."
+            reward_val = 0.10
+            reward_reason = "Maximum steps reached. Episode forced to end with score 0.10."
 
         # Package the reward using our Pydantic model
         reward = Reward(value=reward_val, reason=reward_reason)
