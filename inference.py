@@ -44,6 +44,10 @@ def _bool_str(value: bool) -> str:
 def _fmt_reward(value: float) -> str:
     return f"{value:.2f}"
 
+def _safe_score(value: float) -> float:
+    # Keep printed scores strictly inside (0, 1) even after 2-decimal formatting.
+    return round(min(max(float(value), 0.01), 0.99), 2)
+
 def _sanitize_single_line(text: str) -> str:
     return str(text).replace("\r", " ").replace("\n", " ")
 
@@ -103,13 +107,14 @@ def run_baseline():
                 step_count += 1
                 reward_val = float(reward.value)
                 rewards.append(reward_val)
+                printed_reward = _safe_score(reward_val)
                 if obs.last_action_error is None:
                     err = "null"
                 else:
                     err = _sanitize_single_line(obs.last_action_error)
 
                 print(
-                    f"[STEP] step={step_count} action={action_str} reward={_fmt_reward(reward_val)} "
+                    f"[STEP] step={step_count} action={action_str} reward={_fmt_reward(printed_reward)} "
                     f"done={_bool_str(done)} error={err}"
                 )
 
@@ -120,11 +125,12 @@ def run_baseline():
             # Exception details are therefore surfaced in [END] success=false.
         finally:
             env.close()
-            rewards_csv = ",".join(_fmt_reward(r) for r in rewards)
+            printed_rewards = [_safe_score(r) for r in rewards]
+            rewards_csv = ",".join(_fmt_reward(r) for r in printed_rewards)
             print(
                 f"[END] success={_bool_str(success)} steps={step_count} rewards={rewards_csv}"
             )
-            episode_score = rewards[-1] if rewards else 0.0
+            episode_score = _safe_score(rewards[-1]) if rewards else 0.01
             total_score += episode_score
 
     avg_score = total_score / num_episodes if num_episodes > 0 else 0.0
