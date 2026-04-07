@@ -205,10 +205,10 @@ Notes:
 ### Baseline result (current)
 - Model: `Qwen/Qwen2.5-72B-Instruct`
 - Episodes: `6` (deterministic task order)
-- Average score: `0.98 / 1.0`
+- Average score: run-dependent; check `BASELINE AVERAGE SCORE` from your latest `python inference.py` execution
 - API format: OpenAI client compatible (`HF_TOKEN`, `API_BASE_URL`, `MODEL_NAME`)
-- Run date: `2026-04-04`
-- Version reference: `v1.0.0` (project metadata), commit `6cdccdc`
+- Run date: use the date of your latest baseline run
+- Version reference: current `main` branch commit
 
 ## Docker / Hugging Face Space Deployment
 

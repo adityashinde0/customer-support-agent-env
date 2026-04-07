@@ -48,5 +48,5 @@ class Action(BaseModel):
 class Reward(BaseModel):
     """The feedback score given to the agent after taking an action."""
     
-    value: float = Field(description="The numerical points awarded or deducted. Must be between 0.0 and 1.0 at the end.")
+    value: float = Field(description="The numerical points awarded or deducted. Terminal/task scores are kept strictly within (0, 1).")
     reason: str = Field(description="A human-readable explanation of why this score was given.")
