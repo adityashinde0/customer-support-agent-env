@@ -84,7 +84,7 @@ The environment provides both trajectory-level and terminal signal:
 - step time penalty for inefficiency
 - partial positive rewards for useful intermediate actions
 - penalties for incorrect classification/actions
-- deterministic final grading (`0.0` to `1.0`)
+- deterministic final grading (strictly within `(0, 1)`)
 - episode termination on resolve/escalation or max-step boundary
 
 ## Tasks and Difficulty
@@ -100,10 +100,10 @@ The environment currently defines 6 tasks with easy/medium/hard progression and 
 
 ## Grader and Scoring
 
-The grader is deterministic and returns a normalized score in the `0.0` to `1.0` range.
+The grader is deterministic and returns task scores strictly inside `(0, 1)` to match validator requirements.
 
-- `1.0` for correct terminal handling according to task policy and expected category.
-- `0.0` for incorrect terminal handling.
+- `0.95` for correct terminal handling according to task policy and expected category.
+- `0.05` for incorrect terminal handling.
 - Trajectory rewards additionally include partial progress and penalties (classification quality, KB usage, step efficiency).
 - Maximum episode length is bounded to prevent loop exploitation.
 
