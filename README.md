@@ -15,7 +15,7 @@ tags:
 
 A real-world OpenEnv simulation where an agent must handle customer support tickets using structured actions, policy lookup, and deterministic grading.
 
-cheak the [Presentation](https://www.dropbox.com/scl/fi/mraroynl2t5nk7deqylqf/CustomerSupport_OpenEnv.pdf?rlkey=1fojgd4l0d29690ledvi2svu0&st=vges4r09&dl=0)
+Check the [Presentation](https://www.dropbox.com/scl/fi/mraroynl2t5nk7deqylqf/CustomerSupport_OpenEnv.pdf?rlkey=1fojgd4l0d29690ledvi2svu0&st=vges4r09&dl=0)
 
 ## Live Space
 
@@ -81,11 +81,11 @@ It is designed for agent training/evaluation in a realistic business domain, not
 
 The environment provides both trajectory-level and terminal signal:
 
-- step time penalty for inefficiency
-- partial positive rewards for useful intermediate actions
-- penalties for incorrect classification/actions
-- deterministic final grading (strictly within `(0, 1)`)
+- flat intermediate reward (`0.01`) for all non-terminal steps — avoids boundary violations from reward accumulation
+- deterministic terminal grading: `0.9` (success) or `0.1` (failure), strictly within `(0, 1)`
+- timeout penalty of `0.10` if max steps (10) are reached without resolution
 - episode termination on resolve/escalation or max-step boundary
+- all rewards and scores are clamped via `_safe_score()` before printing to guarantee strict `(0, 1)` range
 
 ## Tasks and Difficulty
 
@@ -192,13 +192,16 @@ The script prints strict per-episode lines to `stdout`:
 
 ```text
 [START] task=<task_name> env=<benchmark> model=<model_name>
-[STEP]  step=<n> action=<action_str> reward=<0.00> done=<true|false> error=<msg|null>
-[END]   success=<true|false> steps=<n> rewards=<r1,r2,...,rn>
+[STEP] step=<n> action=<action_str> reward=<0.00> done=<true|false> error=<msg|null>
+[END] success=<true|false> steps=<n> rewards=<r1,r2,...,rn> score=<0.00>
 ```
 
 Notes:
-- `reward` and `rewards` use 2 decimal places.
+- `reward`, `rewards`, and `score` use 2 decimal places.
+- all reward and score values are strictly within `(0, 1)` — never `0.00`, never `1.00`.
 - `done` and `success` are lowercase booleans.
+- `success` is `true` only when the terminal reward exceeds `0.5`.
+- `score` is the terminal reward of the episode (last value in `rewards`), explicitly included for validator compatibility.
 - each output is a single line (no embedded newlines).
 - baseline average score is printed to `stderr` to keep `stdout` format strict.
 
@@ -254,7 +257,7 @@ openenv validate --url https://<your-space>.hf.space -v
 - Local structure: `openenv validate` -> PASS
 - Local runtime: `openenv validate --url http://127.0.0.1:7860 -v` -> PASS
 - Live runtime: `openenv validate --url https://adityashinde0-customer-support-openenv.hf.space -v` -> PASS (`6/6`)
-- Last documented check date: `2026-04-04`
+- Last documented check date: `2026-04-08`
 
 ## Reproducibility Notes
 
