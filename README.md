@@ -104,7 +104,7 @@ The grader is deterministic and returns task scores strictly inside `(0, 1)` to 
 
 - `0.9` for correct terminal handling according to task policy and expected category.
 - `0.1` for incorrect terminal handling.
-- Trajectory rewards additionally include partial progress and penalties (classification quality, KB usage, step efficiency).
+- Trajectory rewards use a flat in-range intermediate signal (`0.01`) for non-terminal steps.
 - Maximum episode length is bounded to prevent loop exploitation.
 
 This design supports both strict evaluation and useful learning signal during rollouts.

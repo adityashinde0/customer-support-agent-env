@@ -39,7 +39,7 @@ class TestInferenceOutputFormat(unittest.TestCase):
             r"^\[STEP\] step=\d+ action=.+ reward=-?\d+\.\d{2} done=(true|false) error=.*$"
         )
         end_re = re.compile(
-            r"^\[END\] success=(true|false) steps=\d+ rewards=-?\d+\.\d{2}(,-?\d+\.\d{2})*$"
+            r"^\[END\] success=(true|false) steps=\d+ rewards=-?\d+\.\d{2}(,-?\d+\.\d{2})* score=-?\d+\.\d{2}$"
         )
 
         with patch.object(inference, "TASK_ORDER", ["easy"]):

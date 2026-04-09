@@ -837,7 +837,7 @@ body:has(select:hover) #cursor-dot{
     <div class="action-card" style="background:rgba(168, 85, 247,.08)">
       <div class="ac-icon">⚡</div>
       <div class="ac-name">Reward Signal</div>
-      <div class="ac-desc">Every action scores you. Correct classification +0.2. Wrong one -0.2. Perfect resolve +1.0. Clock is ticking.</div>
+      <div class="ac-desc">Every in-step action gives +0.01. Correct terminal handling gives +0.90. Incorrect or timeout ends at +0.10.</div>
     </div>
   </div>
 </section>
@@ -975,7 +975,7 @@ body:has(select:hover) #cursor-dot{
 
 <footer>
   <div class="foot-logo">Customer Support Openenv</div>
-  <div class="foot-text">Built for the OpenEnv Hackathon 2024</div>
+  <div class="foot-text">Built for the OpenEnv Hackathon 2026</div>
   <div class="foot-devs">Developed by <span>Hrushikesh Sarode</span> & <span>Aditya Shinde</span></div>
   <div class="foot-links">
     <a href="/docs" target="_blank">API Docs</a>
