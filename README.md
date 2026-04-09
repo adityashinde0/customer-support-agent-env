@@ -266,6 +266,13 @@ openenv validate --url https://<your-space>.hf.space -v
 - Baseline execution uses explicit environment variables and a fixed script entrypoint (`inference.py`).
 - Designed for hackathon infra expectations (target: <=20 min inference runtime on 2 vCPU / 8 GB).
 
+## Known Limitations
+
+- Task bank is intentionally small and deterministic (6 fixed scenarios).
+- KB lookup is lightweight keyword routing, not semantic retrieval.
+- Intermediate reward shaping is intentionally simple (`0.01` per valid non-terminal step).
+- This environment prioritizes deterministic grading and validator compatibility over broad real-world coverage.
+
 ## Authors
 
 - Aditya Shinde

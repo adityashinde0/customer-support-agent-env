@@ -42,8 +42,20 @@ class CustomerSupportEnv:
         reward_val = 0.01
         reward_reason = "Neutral in-range step reward."
 
+        # Validate action payloads per action type to keep behavior deterministic
+        # and avoid silently accepting malformed agent outputs.
+        if action.action_type == "classify_issue" and not action.category_guess:
+            self.obs.last_action_error = "classify_issue requires category_guess."
+            reward_reason = "Invalid action payload: missing category_guess."
+        elif action.action_type == "search_kb" and not (action.search_query or "").strip():
+            self.obs.last_action_error = "search_kb requires a non-empty search_query."
+            reward_reason = "Invalid action payload: missing search_query."
+        elif action.action_type in ["ask_clarifying_question", "resolve_ticket"] and not (action.message_to_customer or "").strip():
+            self.obs.last_action_error = f"{action.action_type} requires message_to_customer."
+            reward_reason = "Invalid action payload: missing message_to_customer."
+
         # Logic for searching the Knowledge Base
-        if action.action_type == "search_kb":
+        if action.action_type == "search_kb" and self.obs.last_action_error is None:
             query = (action.search_query or "").lower()
             if "billing" in query or "receipt" in query:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_billing"]
@@ -55,14 +67,14 @@ class CustomerSupportEnv:
             reward_reason = "In-range reward: Successfully queried the knowledge base."
 
         # Logic for asking a question
-        elif action.action_type == "ask_clarifying_question":
+        elif action.action_type == "ask_clarifying_question" and self.obs.last_action_error is None:
             self.obs.conversation_history.append(f"Agent: {action.message_to_customer}")
             self.obs.conversation_history.append("Customer: Please just fix my issue based on my first message.")
             reward_val = 0.01
             reward_reason = "In-range reward: Asked a clarifying question."
 
         # Logic for classifying the ticket
-        elif action.action_type == "classify_issue":
+        elif action.action_type == "classify_issue" and self.obs.last_action_error is None:
             self.obs.issue_category = action.category_guess
             if action.category_guess == self.current_task["expected_category"]:
                 reward_val = 0.01
@@ -72,7 +84,7 @@ class CustomerSupportEnv:
                 reward_reason = "In-range reward: Incorrect classification."
 
         # Logic for ending the conversation (Resolve or Escalate)
-        elif action.action_type in ["resolve_ticket", "escalate_to_human"]:
+        elif action.action_type in ["resolve_ticket", "escalate_to_human"] and self.obs.last_action_error is None:
             self.obs.is_resolved = True
             self.obs.conversation_history.append(f"Agent Action: {action.action_type}")
 
