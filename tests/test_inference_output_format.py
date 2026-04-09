@@ -67,6 +67,12 @@ class TestInferenceOutputFormat(unittest.TestCase):
             self.assertTrue(step_re.match(line))
         self.assertTrue(end_re.match(end_lines[0]))
 
+        end_line = end_lines[0]
+        rewards_part = end_line.split(" rewards=", 1)[1].split(" score=", 1)[0]
+        score_part = end_line.rsplit(" score=", 1)[1]
+        last_reward = rewards_part.split(",")[-1]
+        self.assertEqual(score_part, last_reward)
+
         self.assertEqual(lines[0][:7], "[START]")
         self.assertEqual(lines[-1][:5], "[END]")
         self.assertTrue(all(line.startswith("[STEP]") for line in lines[1:-1]))

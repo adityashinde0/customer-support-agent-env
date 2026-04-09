@@ -161,6 +161,15 @@ openenv validate
 openenv validate --url http://127.0.0.1:7860 -v
 ```
 
+### 5. Run test suite
+```bash
+cd customer-support-agent-env
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+Note:
+- Run tests from inside `customer-support-agent-env` so local imports resolve consistently.
+
 ## Baseline Inference Script
 
 The baseline script (`inference.py`) uses OpenAI client format and required environment variables.
