@@ -899,7 +899,7 @@ select,input[type=text]{
   <div class="hero-bg-blob blob2"></div>
   <div class="hero-bg-blob blob3"></div>
   <div class="hero-inner">
-    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · Mission Interface</div>
+    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · Command Center</div>
     <h1 class="hero-title">
       <span class="fill-purple">CUSTOMER</span><br>
       <span class="stroke">SUPPORT</span><br>
