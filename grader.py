@@ -17,8 +17,8 @@ def evaluate_performance(obs: Observation, action: Action, expected_category: st
     if expected_category == "Refund_Request" and action.action_type == "escalate_to_human":
         return SUCCESS_SCORE
 
-    # Resolve win condition: any explicit resolve_ticket should receive the
-    # terminal success score once the episode is closed.
+    # Resolve win condition: any explicit resolve_ticket receives
+    # the terminal success score.
     if action.action_type == "resolve_ticket":
         return SUCCESS_SCORE
 
