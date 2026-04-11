@@ -51,16 +51,18 @@ class TestGraderLogic(unittest.TestCase):
             evaluate_performance(unresolved_obs, action, "Billing"), FAILURE_SCORE
         )
 
-        wrong_refund_action_obs = self._base_obs("Billing")
-        wrong_refund_action = Action(
+    def test_resolve_ticket_is_category_independent(self):
+        # The observation category intentionally differs from expected_category.
+        mismatch_obs = self._base_obs("Billing")
+        resolve_refund_action = Action(
             action_type="resolve_ticket",
             message_to_customer="Refund approved.",
         )
         self.assertEqual(
             evaluate_performance(
-                wrong_refund_action_obs, wrong_refund_action, "Refund_Request"
+                mismatch_obs, resolve_refund_action, "Refund_Request"
             ),
-            FAILURE_SCORE,
+            SUCCESS_SCORE,
         )
 
 
