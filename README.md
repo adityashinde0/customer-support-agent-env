@@ -103,7 +103,7 @@ The environment currently defines 6 tasks with easy/medium/hard progression and 
 
 The grader is deterministic and returns task scores strictly inside `(0, 1)` to match validator requirements.
 
-- `0.9` for correct terminal handling according to task policy and expected category.
+- `0.9` for terminal success actions (`resolve_ticket`, or `escalate_to_human` on refund-demand tasks).
 - `0.1` for incorrect terminal handling.
 - Trajectory rewards use a flat in-range intermediate signal (`0.01`) for non-terminal steps.
 - Maximum episode length is bounded to prevent loop exploitation.

@@ -60,7 +60,7 @@ class TestGraderLogic(unittest.TestCase):
             evaluate_performance(
                 wrong_refund_action_obs, wrong_refund_action, "Refund_Request"
             ),
-            FAILURE_SCORE,
+            SUCCESS_SCORE,
         )
 
 

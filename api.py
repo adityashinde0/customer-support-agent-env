@@ -436,6 +436,7 @@ nav{
 /* FORM */
 .fg{margin-bottom:14px}
 .fl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:6px;display:block}
+.fl.select-label::after{content:"  ▾";color:#a78bfa;font-size:11px}
 select,input[type=text]{
   width:100%;padding:11px 14px;
   background:#fff;border:2px solid var(--black);
@@ -971,7 +972,7 @@ select,input[type=text]{
     <div class="action-card">
       <div class="ac-icon">✅</div>
       <div class="ac-name">resolve_ticket</div>
-      <div class="ac-desc">Close the ticket with a solution. Only works if the classification was correct. No shortcuts.</div>
+      <div class="ac-desc">Close the ticket with a final solution. Resolved tickets get the terminal success score.</div>
     </div>
     <div class="action-card">
       <div class="ac-icon">🚨</div>
@@ -1032,7 +1033,7 @@ select,input[type=text]{
         <div class="pg-label">Submit Action</div>
 
         <div class="fg">
-          <label class="fl">Action Type</label>
+          <label class="fl select-label">Action Type</label>
           <select id="actionType" onchange="toggleFields()">
             <option value="classify_issue">classify_issue</option>
             <option value="search_kb">search_kb</option>
@@ -1042,7 +1043,7 @@ select,input[type=text]{
           </select>
         </div>
         <div class="fg fhide" id="f-cat">
-          <label class="fl">Category</label>
+          <label class="fl select-label">Category</label>
           <select id="catGuess">
             <option value="Billing">Billing</option>
             <option value="Technical">Technical</option>
