@@ -72,6 +72,16 @@ class TestEnvironmentBehavior(unittest.TestCase):
         self.assertEqual(obs.ticket_id, "TKT-303")
         self.assertEqual(obs.user_sentiment, "Angry")
 
+    def test_sentiment_updates_after_clarifying_question_step(self):
+        self.env.reset()
+        obs, _, _, _ = self.env.step(
+            Action(
+                action_type="ask_clarifying_question",
+                message_to_customer="Can you share one more detail?"
+            )
+        )
+        self.assertEqual(obs.user_sentiment, "Frustrated")
+
 
 if __name__ == "__main__":
     unittest.main()

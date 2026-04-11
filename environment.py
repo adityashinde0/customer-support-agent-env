@@ -10,8 +10,8 @@ ANGRY_KEYWORDS = (
     "immediately", "blocked", "outrageous", "useless",
 )
 FRUSTRATED_KEYWORDS = (
-    "broken", "error", "404", "issue", "problem", "blank", "white screen",
-    "not working", "failed", "can't", "cannot",
+    "broken", "error code 404", "404", "blank", "white screen",
+    "not working", "failed", "can't", "cannot", "please just fix",
 )
 HAPPY_KEYWORDS = ("thanks", "thank you", "great", "awesome", "perfect", "appreciate")
 
