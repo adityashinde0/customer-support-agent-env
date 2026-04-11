@@ -792,7 +792,7 @@ nav{
 }
 .hero-grid{
   display:grid;
-  grid-template-columns:repeat(16,minmax(8px,1fr));
+  grid-template-columns:repeat(16,minmax(12px,1fr));
   gap:4px;
 }
 .hero-cell{
@@ -898,7 +898,6 @@ select,input[type=text]{
 .foot-links a{color:#a5b4cc}
 @media(max-width:900px){
   .hero-metrics{grid-template-columns:repeat(2,minmax(130px,1fr))}
-  .hero-grid{grid-template-columns:repeat(12,minmax(8px,1fr))}
 }
 </style>
 </head>
@@ -941,13 +940,7 @@ select,input[type=text]{
         <div class="hero-grid-title">Scenario Radar</div>
         <div class="hero-grid-tag">Game-like UI only</div>
       </div>
-      <div class="hero-grid" aria-hidden="true">
-        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
-        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
-        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
-        <span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
-        <span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell"></span><span class="hero-cell"></span>
-      </div>
+      <div class="hero-grid" id="scenarioGrid" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -1204,7 +1197,30 @@ select,input[type=text]{
 <div class="toast" id="toast"></div>
 
 <script>
+const SCENARIO_GRID_ROWS=[
+  "HHHHH...........",
+  "HHHCC..ZZZ......",
+  "HHHHH......CC...",
+  "................",
+  "..CC........ZZ.."
+];
+
+function renderScenarioGrid(){
+  const grid=document.getElementById('scenarioGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  SCENARIO_GRID_ROWS.join('').split('').forEach(ch=>{
+    const cell=document.createElement('span');
+    cell.className='hero-cell';
+    if(ch==='H')cell.classList.add('hot');
+    if(ch==='C')cell.classList.add('crew');
+    if(ch==='Z')cell.classList.add('zone');
+    grid.appendChild(cell);
+  });
+}
+
 let totalRew=0,stepNum=0,lastHistLen=0;
+renderScenarioGrid();
 
 function toggleFields(){
   const a=document.getElementById('actionType').value;
