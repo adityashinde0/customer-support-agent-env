@@ -583,6 +583,12 @@ select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 4px rgba(0, 2
   font-weight: 700;
   color: #475569;
 }
+.score-hint{
+  margin-top:8px;
+  font-size:11px;
+  line-height:1.45;
+  color:var(--muted);
+}
 
 
 /* SETUP SECTION */
@@ -912,32 +918,32 @@ select,input[type=text]{
     <div class="task-card">
       <div class="task-num">01</div>
       <div class="task-tag tag-easy">Easy</div>
-      <div class="task-name">Password Reset</div>
-      <div class="task-desc">Deterministic resolution requiring a simple KB search.</div>
+      <div class="task-name">Billing Receipt Request</div>
+      <div class="task-desc">Classify as Billing, optionally verify policy via search_kb, then resolve clearly.</div>
     </div>
     <div class="task-card">
       <div class="task-num">02</div>
       <div class="task-tag tag-med">Medium</div>
-      <div class="task-name">Standard Refund</div>
-      <div class="task-desc">Requires classification, KB search for policy checking, and resolution.</div>
+      <div class="task-name">Dashboard Error 404</div>
+      <div class="task-desc">Identify Technical issue, pull KB guidance, and provide the correct fix path.</div>
     </div>
     <div class="task-card">
       <div class="task-num">03</div>
-      <div class="task-tag tag-med">Medium</div>
-      <div class="task-name">Vague Complaint</div>
-      <div class="task-desc">The user says "It is broken." The agent must proactively ask a clarifying question before proceeding.</div>
+      <div class="task-tag tag-hard">Hard</div>
+      <div class="task-name">Digital Item Refund Demand</div>
+      <div class="task-desc">For non-refundable digital downloads, policy-safe handling usually means escalation.</div>
     </div>
     <div class="task-card">
       <div class="task-num">04</div>
-      <div class="task-tag tag-hard">Medium/Hard</div>
+      <div class="task-tag tag-hard">Hard</div>
       <div class="task-name">VIP Outage</div>
       <div class="task-desc">Tests if the agent can correctly classify high-urgency technical issues without being distracted by account status keywords.</div>
     </div>
     <div class="task-card">
       <div class="task-num">05</div>
-      <div class="task-tag tag-hard">Hard</div>
-      <div class="task-name">Hostile/Policy Violation</div>
-      <div class="task-desc">The user demands a refund for a non-refundable item. The agent must realize the KB contradicts the user and gracefully use escalate_to_human rather than arguing.</div>
+      <div class="task-tag tag-med">Medium</div>
+      <div class="task-name">Vague Complaint</div>
+      <div class="task-desc">The user says "It is broken." Ask one clarifying question, then classify/search/resolve efficiently.</div>
     </div>
     <div class="task-card">
       <div class="task-num">06</div>
@@ -957,7 +963,7 @@ select,input[type=text]{
     <div class="action-card">
       <div class="ac-icon">🏷️</div>
       <div class="ac-name">classify_issue</div>
-      <div class="ac-desc">Tag the ticket type first. Billing, Technical, or Refund_Request. Miss this and lose points.</div>
+      <div class="ac-desc">Tag the ticket type first: Billing, Technical, or Refund_Request. This is a setup action worth +0.01.</div>
     </div>
     <div class="action-card">
       <div class="ac-icon">📚</div>
@@ -977,12 +983,12 @@ select,input[type=text]{
     <div class="action-card">
       <div class="ac-icon">🚨</div>
       <div class="ac-name">escalate_to_human</div>
-      <div class="ac-desc">Hand off to a real person. Safe fallback — but costs points. Use only when policy demands it.</div>
+      <div class="ac-desc">Hand off to a real person when policy requires it. For some refund tasks, this is the successful terminal action.</div>
     </div>
     <div class="action-card" style="background:rgba(168, 85, 247,.08)">
       <div class="ac-icon">⚡</div>
       <div class="ac-name">Reward Signal</div>
-      <div class="ac-desc">Every in-step action gives +0.01. Correct terminal handling gives +0.90. Incorrect or timeout ends at +0.10.</div>
+      <div class="ac-desc">Classify/search/question actions give +0.01. You only get +0.90 after a correct terminal action before step 10.</div>
     </div>
   </div>
 </section>
@@ -1006,6 +1012,7 @@ select,input[type=text]{
           <div class="tkt-row"><span class="tkt-k">Category</span><span class="tkt-v" id="catVal" style="color:#888">Not classified</span></div>
           <div class="tkt-row"><span class="tkt-k">Steps</span><span class="tkt-v" id="stepVal">0 / 10</span></div>
           <div class="tkt-row"><span class="tkt-k">Terminal Score</span><span class="tkt-v" id="terminalScore">—</span></div>
+          <div class="score-hint" id="scoreHint">Use a terminal action before step 10 to reach 0.90.</div>
           <div class="prog-bar">
             <div class="prog-labels"><span>Progress</span><span id="progPct">0%</span></div>
             <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
@@ -1142,6 +1149,15 @@ function toggleFields(){
   if(a==='ask_clarifying_question'||a==='resolve_ticket') document.getElementById('f-msg').classList.remove('fhide');
 }
 
+function getTerminalHint(obs){
+  // Show the most useful terminal scoring tip from current state.
+  const category=(obs&&typeof obs==='object'&&typeof obs.issue_category==='string')?obs.issue_category:'';
+  if(category==='Refund_Request'){
+    return 'Refund_Request tasks usually need escalate_to_human for a 0.90 terminal score.';
+  }
+  return 'Classify/search actions are +0.01. Use resolve_ticket before step 10 for 0.90.';
+}
+
 function showToast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg;t.className='toast show '+type;
@@ -1231,6 +1247,7 @@ function updateStatus(obs,done){
   ce.style.color=obs.issue_category?'var(--black)':'#888';
   const sc=obs.step_count||0;
   document.getElementById('stepVal').textContent=`${sc} / 10`;
+  document.getElementById('scoreHint').textContent=getTerminalHint(obs);
   const pct=Math.min((sc/10)*100,100);
   document.getElementById('progFill').style.width=pct+'%';
   document.getElementById('progPct').textContent=Math.round(pct)+'%';
@@ -1292,7 +1309,9 @@ async function refreshState(){
     const res=await fetch('/state');
     if(!res.ok){showToast('No active state. Start a new episode first.','err');return;}
     const data=await res.json();
-    updateStatus(data.observation||data,false);
+    const payload=data&&typeof data==='object'?data:{};
+    const obs=payload.observation||payload;
+    updateStatus(obs,Boolean(obs&&obs.is_resolved));
     showToast('State refreshed');
   }catch(e){showToast('Error: '+e.message,'err');}
 }
@@ -1300,10 +1319,18 @@ async function refreshState(){
 async function submitAction(){
   const a=document.getElementById('actionType').value;
   const payload={action_type:a};
-  if(a==='classify_issue') payload.category_guess=document.getElementById('catGuess').value;
-  if(a==='search_kb') payload.search_query=document.getElementById('searchQ').value;
-  if(a==='ask_clarifying_question'||a==='resolve_ticket')
-    payload.message_to_customer=document.getElementById('msgInput').value;
+  const categoryGuess=(document.getElementById('catGuess').value||'').trim();
+  const searchQuery=(document.getElementById('searchQ').value||'').trim();
+  const messageToCustomer=(document.getElementById('msgInput').value||'').trim();
+  if(a==='classify_issue') payload.category_guess=categoryGuess;
+  if(a==='search_kb'){
+    if(!searchQuery){showToast('search_kb needs a query.','err');return;}
+    payload.search_query=searchQuery;
+  }
+  if(a==='ask_clarifying_question'||a==='resolve_ticket'){
+    if(!messageToCustomer){showToast(a+' needs a message.','err');return;}
+    payload.message_to_customer=messageToCustomer;
+  }
   const btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='⟳ Processing…';
   try{
@@ -1330,6 +1357,9 @@ async function submitAction(){
       const terminalScore=parseFloat(v)||0;
       document.getElementById('terminalScore').textContent=terminalScore.toFixed(2);
       document.getElementById('terminalScore').style.color=terminalScore>=0.9?'#16a34a':(terminalScore>=0.5?'#f59e0b':'#ef4444');
+      document.getElementById('scoreHint').textContent=terminalScore>=0.9
+        ? 'Great run: terminal success score achieved.'
+        : 'Episode ended without terminal success. Finish with the right terminal action before step 10.';
       addMsg('System',`Episode finished. Reward: ${parseFloat(v).toFixed(2)}`,'sy');
       showToast(v>=0.5?'🎉 Episode complete!':'❌ Episode ended — review policy','');
     }
