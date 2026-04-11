@@ -919,7 +919,7 @@ select,input[type=text]{
       <div class="task-num">01</div>
       <div class="task-tag tag-easy">Easy</div>
       <div class="task-name">Billing Receipt Request</div>
-      <div class="task-desc">Classify as Billing, optionally verify policy via search_kb, then resolve clearly.</div>
+      <div class="task-desc">Classify as Billing, optionally verify policy via <code>search_kb</code>, then resolve clearly.</div>
     </div>
     <div class="task-card">
       <div class="task-num">02</div>
@@ -1150,7 +1150,7 @@ function toggleFields(){
 }
 
 function getTerminalHint(obs){
-  const category=obs&&obs.issue_category?obs.issue_category:'';
+  const category=(obs&&typeof obs==='object'&&typeof obs.issue_category==='string')?obs.issue_category:'';
   if(category==='Refund_Request'){
     return 'Refund_Request tasks usually need escalate_to_human for a 0.90 terminal score.';
   }
@@ -1308,8 +1308,9 @@ async function refreshState(){
     const res=await fetch('/state');
     if(!res.ok){showToast('No active state. Start a new episode first.','err');return;}
     const data=await res.json();
-    const obs=data.observation||data;
-    updateStatus(obs,!!obs.is_resolved);
+    const payload=data&&typeof data==='object'?data:{};
+    const obs=payload.observation||payload;
+    updateStatus(obs,Boolean(obs&&obs.is_resolved));
     showToast('State refreshed');
   }catch(e){showToast('Error: '+e.message,'err');}
 }
