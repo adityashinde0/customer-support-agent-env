@@ -915,7 +915,7 @@ select,input[type=text]{
     <div class="hero-metrics">
       <div class="metric"><div class="metric-k">Tasks</div><div class="metric-v">6 Scenarios</div></div>
       <div class="metric"><div class="metric-k">Actions</div><div class="metric-v">5 Controls</div></div>
-      <div class="metric"><div class="metric-k">Step Limit</div><div class="metric-v">10 / Episode</div></div>
+      <div class="metric"><div class="metric-k">Step Limit</div><div class="metric-v">10/Episode</div></div>
       <div class="metric"><div class="metric-k">Target Score</div><div class="metric-v">0.90+</div></div>
     </div>
   </div>
