@@ -1004,6 +1004,7 @@ select,input[type=text]{
           <div class="tkt-row"><span class="tkt-k">Tier</span><span class="tkt-v" id="tierVal">—</span></div>
           <div class="tkt-row"><span class="tkt-k">Category</span><span class="tkt-v" id="catVal" style="color:#888">Not classified</span></div>
           <div class="tkt-row"><span class="tkt-k">Steps</span><span class="tkt-v" id="stepVal">0 / 10</span></div>
+          <div class="tkt-row"><span class="tkt-k">Terminal Score</span><span class="tkt-v" id="terminalScore">—</span></div>
           <div class="prog-bar">
             <div class="prog-labels"><span>Progress</span><span id="progPct">0%</span></div>
             <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
@@ -1263,6 +1264,7 @@ async function resetEnv(){
   document.getElementById('kbPh').style.display='';
   totalRew=0;stepNum=0;lastHistLen=0;
   document.getElementById('rtotal').innerHTML='+0.00';
+  document.getElementById('terminalScore').textContent='—';
   document.getElementById('convoWrap').innerHTML=`<div class="convo-empty" id="convoEmpty">
     <div class="ce-emoji">⏳</div>
     <div class="ce-title">Loading…</div></div>`;
@@ -1324,6 +1326,9 @@ async function submitAction(){
 
     if(data.done){
       const v=typeof data.reward==='object'?data.reward.value:(data.reward||0);
+      const terminal=parseFloat(v)||0;
+      document.getElementById('terminalScore').textContent=terminal.toFixed(2);
+      document.getElementById('terminalScore').style.color=terminal>=0.9?'#16a34a':(terminal>=0.5?'#f59e0b':'#ef4444');
       addMsg('System',`Episode finished. Reward: ${parseFloat(v).toFixed(2)}`,'sy');
       showToast(v>=0.5?'🎉 Episode complete!':'❌ Episode ended — review policy','');
     }

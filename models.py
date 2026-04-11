@@ -14,6 +14,10 @@ class Observation(BaseModel):
     # State tracking for the multi-step flow
     conversation_history: List[str] = Field(default_factory=list, description="A transcript of messages between the customer and the agent.")
     step_count: int = Field(default=0, description="How many actions the agent has taken so far. High step counts will be penalized.")
+    user_sentiment: Literal["Happy", "Neutral", "Frustrated", "Angry"] = Field(
+        default="Neutral",
+        description="Detected customer sentiment derived from customer messages."
+    )
     
     # Episode boundary
     is_resolved: bool = Field(default=False, description="True if the ticket has been completely handled.")
