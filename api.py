@@ -661,7 +661,7 @@ footer{
 .toast.err{background:var(--purple); color:#fff; border-color:var(--purple);}
 
 /* ── CUSTOM CURSOR ── */
-*{cursor:none!important}
+*{cursor:auto}
 #cursor-dot{
   position:fixed;width:8px;height:8px;border-radius:50%;
   background:var(--purple);pointer-events:none;z-index:99999;
@@ -707,7 +707,6 @@ body:has(select:hover) #cursor-dot{
   --accent2:#a78bfa;
   --good:#4ade80;
 }
-*{cursor:auto!important}
 #cursor-dot,#cursor-ring,#cursor-trail{display:none}
 body{
   background:
@@ -899,7 +898,7 @@ select,input[type=text]{
   <div class="hero-bg-blob blob2"></div>
   <div class="hero-bg-blob blob3"></div>
   <div class="hero-inner">
-    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · Command Center</div>
+    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · Live Environment</div>
     <h1 class="hero-title">
       <span class="fill-purple">CUSTOMER</span><br>
       <span class="stroke">SUPPORT</span><br>
