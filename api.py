@@ -660,41 +660,6 @@ footer{
 .toast.ok{background:var(--cyan);color:var(--black)}
 .toast.err{background:var(--purple); color:#fff; border-color:var(--purple);}
 
-/* ── CUSTOM CURSOR ── */
-*{cursor:auto}
-#cursor-dot{
-  position:fixed;width:8px;height:8px;border-radius:50%;
-  background:var(--purple);pointer-events:none;z-index:99999;
-  transform:translate(-50%,-50%);transition:transform .1s ease,background .3s;
-  box-shadow:0 0 10px var(--purple),0 0 20px rgba(168,85,247,0.5);
-}
-#cursor-ring{
-  position:fixed;width:36px;height:36px;border-radius:50%;
-  border:2px solid var(--purple);pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);
-  transition:width .3s var(--bounce),height .3s var(--bounce),border-color .3s,opacity .3s;
-  opacity:0.6;
-}
-#cursor-trail{
-  position:fixed;width:80px;height:80px;border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,0.12) 0%,transparent 70%);
-  pointer-events:none;z-index:99997;
-  transform:translate(-50%,-50%);
-  transition:left .15s ease,top .15s ease;
-}
-body:has(a:hover) #cursor-ring,
-body:has(button:hover) #cursor-ring,
-body:has(select:hover) #cursor-ring{
-  width:56px;height:56px;border-color:var(--cyan);opacity:1;
-}
-body:has(a:hover) #cursor-dot,
-body:has(button:hover) #cursor-dot,
-body:has(select:hover) #cursor-dot{
-  background:var(--cyan);
-  box-shadow:0 0 15px var(--cyan),0 0 30px rgba(0,243,255,0.6);
-  transform:translate(-50%,-50%) scale(1.5);
-}
-
 /* ── MODERN HACKATHON THEME OVERRIDES ── */
 :root{
   --bg:#070b14;
@@ -707,7 +672,6 @@ body:has(select:hover) #cursor-dot{
   --accent2:#a78bfa;
   --good:#4ade80;
 }
-#cursor-dot,#cursor-ring,#cursor-trail{display:none}
 body{
   background:
     radial-gradient(circle at 20% 20%, rgba(34,211,238,.12), transparent 35%),
@@ -880,10 +844,6 @@ select,input[type=text]{
 </style>
 </head>
 <body>
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<div id="cursor-trail"></div>
-
 <nav>
   <div class="nav-logo">Customer Support <span>Command Center</span></div>
   <div class="nav-right">
@@ -1379,64 +1339,6 @@ function copyCode(btn,id){
     setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2000);
   });
 }
-
-// ── CUSTOM CURSOR ANIMATION ──
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const trail = document.getElementById('cursor-trail');
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
-
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left = mouseX + 'px';
-  dot.style.top = mouseY + 'px';
-  trail.style.left = mouseX + 'px';
-  trail.style.top = mouseY + 'px';
-});
-
-// Ring follows with smooth lag
-(function animateRing(){
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  ring.style.left = ringX + 'px';
-  ring.style.top = ringY + 'px';
-  requestAnimationFrame(animateRing);
-})();
-
-// Click burst effect
-document.addEventListener('click', e => {
-  const burst = document.createElement('div');
-  burst.style.cssText = `
-    position:fixed;left:${e.clientX}px;top:${e.clientY}px;
-    width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:99999;
-    transform:translate(-50%,-50%);background:var(--purple);
-  `;
-  document.body.appendChild(burst);
-  const colors = ['#a855f7','#00f3ff','#c8ff00'];
-  for(let i=0;i<8;i++){
-    const p = document.createElement('div');
-    const angle = (i/8)*Math.PI*2;
-    const dist = 30 + Math.random()*25;
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    p.style.cssText = `
-      position:fixed;width:5px;height:5px;border-radius:50%;
-      pointer-events:none;z-index:99999;background:${color};
-      left:${e.clientX}px;top:${e.clientY}px;
-      transform:translate(-50%,-50%);
-      transition:all 0.5s ease-out;opacity:1;
-    `;
-    document.body.appendChild(p);
-    setTimeout(()=>{
-      p.style.left=(e.clientX+Math.cos(angle)*dist)+'px';
-      p.style.top=(e.clientY+Math.sin(angle)*dist)+'px';
-      p.style.opacity='0';
-      p.style.transform='translate(-50%,-50%) scale(0)';
-    },10);
-    setTimeout(()=>p.remove(),550);
-  }
-  setTimeout(()=>burst.remove(),100);
-});
 
 toggleFields();
 </script>
