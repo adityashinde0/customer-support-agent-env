@@ -762,6 +762,57 @@ nav{
   font-weight:800;
   color:#f8fbff;
 }
+.hero-grid-wrap{
+  margin:18px auto 0;
+  max-width:760px;
+  background:linear-gradient(180deg,rgba(15,23,42,.85),rgba(17,28,51,.92));
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+}
+.hero-grid-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.hero-grid-title{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  color:#d9e8ff;
+}
+.hero-grid-tag{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#67e8f9;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:repeat(16,minmax(8px,1fr));
+  gap:4px;
+}
+.hero-cell{
+  aspect-ratio:1/1;
+  border:1px solid rgba(148,163,184,.22);
+  border-radius:2px;
+  background:rgba(148,163,184,.08);
+}
+.hero-cell.hot{
+  background:rgba(249,115,22,.92);
+  border-color:rgba(249,115,22,.92);
+}
+.hero-cell.crew{
+  background:rgba(34,211,238,.95);
+  border-color:rgba(34,211,238,.95);
+}
+.hero-cell.zone{
+  background:rgba(74,222,128,.5);
+  border-color:rgba(74,222,128,.6);
+}
 .marquee-wrap,.tasks-section,.actions-section,.playground,.setup-section,footer{
   border-color:var(--line);
 }
@@ -847,6 +898,7 @@ select,input[type=text]{
 .foot-links a{color:#a5b4cc}
 @media(max-width:900px){
   .hero-metrics{grid-template-columns:repeat(2,minmax(130px,1fr))}
+  .hero-grid{grid-template-columns:repeat(12,minmax(8px,1fr))}
 }
 </style>
 </head>
@@ -883,6 +935,19 @@ select,input[type=text]{
       <div class="metric"><div class="metric-k">Actions</div><div class="metric-v">5 Controls</div></div>
       <div class="metric"><div class="metric-k">Step Limit</div><div class="metric-v">10/Episode</div></div>
       <div class="metric"><div class="metric-k">Target Score</div><div class="metric-v">0.90+</div></div>
+    </div>
+    <div class="hero-grid-wrap">
+      <div class="hero-grid-head">
+        <div class="hero-grid-title">Scenario Radar</div>
+        <div class="hero-grid-tag">Game-like UI only</div>
+      </div>
+      <div class="hero-grid" aria-hidden="true">
+        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
+        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
+        <span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell hot"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
+        <span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span>
+        <span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell crew"></span><span class="hero-cell crew"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell"></span><span class="hero-cell zone"></span><span class="hero-cell zone"></span><span class="hero-cell"></span><span class="hero-cell"></span>
+      </div>
     </div>
   </div>
 </section>
