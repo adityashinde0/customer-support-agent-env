@@ -1326,9 +1326,9 @@ async function submitAction(){
 
     if(data.done){
       const v=typeof data.reward==='object'?data.reward.value:(data.reward||0);
-      const terminal=parseFloat(v)||0;
-      document.getElementById('terminalScore').textContent=terminal.toFixed(2);
-      document.getElementById('terminalScore').style.color=terminal>=0.9?'#16a34a':(terminal>=0.5?'#f59e0b':'#ef4444');
+      const terminalScore=parseFloat(v)||0;
+      document.getElementById('terminalScore').textContent=terminalScore.toFixed(2);
+      document.getElementById('terminalScore').style.color=terminalScore>=0.9?'#16a34a':(terminalScore>=0.5?'#f59e0b':'#ef4444');
       addMsg('System',`Episode finished. Reward: ${parseFloat(v).toFixed(2)}`,'sy');
       showToast(v>=0.5?'🎉 Episode complete!':'❌ Episode ended — review policy','');
     }

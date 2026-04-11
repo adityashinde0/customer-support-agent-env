@@ -1,5 +1,5 @@
 import json
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Literal
 from models import Observation, Action, Reward
 from grader import evaluate_performance
 
@@ -15,7 +15,7 @@ SENTIMENT_FRUSTRATED_KEYWORDS = (
 )
 SENTIMENT_HAPPY_KEYWORDS = ("thanks", "thank you", "great", "awesome", "perfect", "appreciate")
 
-def _detect_sentiment_from_text(text: str) -> str:
+def _detect_sentiment_from_text(text: str) -> Literal["Happy", "Neutral", "Frustrated", "Angry"]:
     """Deterministic keyword-based sentiment detector returning Happy/Neutral/Frustrated/Angry."""
     content = (text or "").lower()
     if any(k in content for k in SENTIMENT_ANGRY_KEYWORDS):
