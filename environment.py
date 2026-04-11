@@ -5,24 +5,24 @@ from grader import evaluate_performance
 
 # All 6 task keys in a fixed, deterministic order
 TASK_ORDER = ["easy", "medium", "hard", "hard1", "medium1", "hard2"]
-ANGRY_KEYWORDS = (
+SENTIMENT_ANGRY_KEYWORDS = (
     "angry", "terrible", "demand", "refund right now", "bad review",
     "immediately", "blocked", "outrageous", "useless",
 )
-FRUSTRATED_KEYWORDS = (
+SENTIMENT_FRUSTRATED_KEYWORDS = (
     "broken", "error code 404", "404", "blank", "white screen",
     "not working", "failed", "can't", "cannot", "please just fix",
 )
-HAPPY_KEYWORDS = ("thanks", "thank you", "great", "awesome", "perfect", "appreciate")
+SENTIMENT_HAPPY_KEYWORDS = ("thanks", "thank you", "great", "awesome", "perfect", "appreciate")
 
 def _detect_sentiment_from_text(text: str) -> str:
-    """Deterministic keyword-based sentiment detector for customer messages."""
+    """Deterministic keyword-based sentiment detector returning Happy/Neutral/Frustrated/Angry."""
     content = (text or "").lower()
-    if any(k in content for k in ANGRY_KEYWORDS):
+    if any(k in content for k in SENTIMENT_ANGRY_KEYWORDS):
         return "Angry"
-    if any(k in content for k in FRUSTRATED_KEYWORDS):
+    if any(k in content for k in SENTIMENT_FRUSTRATED_KEYWORDS):
         return "Frustrated"
-    if any(k in content for k in HAPPY_KEYWORDS):
+    if any(k in content for k in SENTIMENT_HAPPY_KEYWORDS):
         return "Happy"
     return "Neutral"
 
