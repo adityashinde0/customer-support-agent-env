@@ -51,14 +51,14 @@ class TestGraderLogic(unittest.TestCase):
             evaluate_performance(unresolved_obs, action, "Billing"), FAILURE_SCORE
         )
 
-        wrong_refund_action_obs = self._base_obs("Billing")
-        wrong_refund_action = Action(
+        resolve_refund_action_obs = self._base_obs("Billing")
+        resolve_refund_action = Action(
             action_type="resolve_ticket",
             message_to_customer="Refund approved.",
         )
         self.assertEqual(
             evaluate_performance(
-                wrong_refund_action_obs, wrong_refund_action, "Refund_Request"
+                resolve_refund_action_obs, resolve_refund_action, "Refund_Request"
             ),
             SUCCESS_SCORE,
         )

@@ -436,7 +436,7 @@ nav{
 /* FORM */
 .fg{margin-bottom:14px}
 .fl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:6px;display:block}
-.fl.select-label::after{content:"  ▾";color:#a78bfa;font-size:11px}
+.fl.select-label::after{content:"  ▾";color:var(--purple);font-size:11px}
 select,input[type=text]{
   width:100%;padding:11px 14px;
   background:#fff;border:2px solid var(--black);
