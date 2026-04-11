@@ -1204,24 +1204,32 @@ const SCENARIO_GRID_ROWS=[
   "................",
   "..CC........ZZ.."
 ];
+const SCENARIO_GRID_COLUMNS=16;
 const GRID_CLASS_BY_MARKER={H:'hot',C:'crew',Z:'zone'};
 
 function renderScenarioGrid(){
   const grid=document.getElementById('scenarioGrid');
   if(!grid)return;
   const fragment=document.createDocumentFragment();
-  SCENARIO_GRID_ROWS.join('').split('').forEach(ch=>{
-    const cell=document.createElement('span');
-    cell.className='hero-cell';
-    const mappedClass=GRID_CLASS_BY_MARKER[ch];
-    if(mappedClass)cell.classList.add(mappedClass);
-    fragment.appendChild(cell);
+  SCENARIO_GRID_ROWS.forEach(row=>{
+    const normalizedRow=row.padEnd(SCENARIO_GRID_COLUMNS,'.').slice(0,SCENARIO_GRID_COLUMNS);
+    for(const ch of normalizedRow){
+      const cell=document.createElement('span');
+      cell.className='hero-cell';
+      const mappedClass=GRID_CLASS_BY_MARKER[ch];
+      if(mappedClass)cell.classList.add(mappedClass);
+      fragment.appendChild(cell);
+    }
   });
   grid.replaceChildren(fragment);
 }
 
 let totalRew=0,stepNum=0,lastHistLen=0;
-renderScenarioGrid();
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',renderScenarioGrid);
+}else{
+  renderScenarioGrid();
+}
 
 function toggleFields(){
   const a=document.getElementById('actionType').value;
