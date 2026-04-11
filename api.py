@@ -235,7 +235,7 @@ nav{
   -webkit-text-stroke:3px var(--black);
   color:transparent;
 }
-.hero-title .fill-lime{color:var(--lime);-webkit-text-stroke:3px var(--black)}
+.hero-title .fill-cyan{color:var(--lime);-webkit-text-stroke:3px var(--black)}
 .hero-title .fill-purple{color:var(--purple)}
 
 .hero-sub{
@@ -695,11 +695,6 @@ body:has(select:hover) #cursor-dot{
   transform:translate(-50%,-50%) scale(1.5);
 }
 
-@media(max-width:900px){
-  *{cursor:auto!important}
-  #cursor-dot,#cursor-ring,#cursor-trail{display:none}
-}
-
 /* ── MODERN HACKATHON THEME OVERRIDES ── */
 :root{
   --bg:#070b14;
@@ -758,7 +753,7 @@ nav{
 .hero-title .stroke{
   -webkit-text-stroke:2px #93c5fd;
 }
-.hero-title .fill-lime{color:#38bdf8;-webkit-text-stroke:0}
+.hero-title .fill-cyan{color:#38bdf8;-webkit-text-stroke:0}
 .hero-title .fill-purple{color:#c4b5fd}
 .hero-sub{color:#b7c7df;max-width:760px}
 .hero-actions .btn-hero{
@@ -909,7 +904,7 @@ select,input[type=text]{
     <h1 class="hero-title">
       <span class="fill-purple">CUSTOMER</span><br>
       <span class="stroke">SUPPORT</span><br>
-      <span class="fill-lime">COMMAND CENTER</span>
+      <span class="fill-cyan">COMMAND CENTER</span>
     </h1>
     <p class="hero-sub">
       A clean, modern mission dashboard to train AI on <strong>real customer tickets</strong> with clear actions, live reward tracking, and policy-safe outcomes.
