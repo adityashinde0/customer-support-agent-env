@@ -875,7 +875,7 @@ select,input[type=text]{
   color:#c4b5fd;
 }
 .foot-links a{color:#a5b4cc}
-@media(max-width:980px){
+@media(max-width:900px){
   .hero-metrics{grid-template-columns:repeat(2,minmax(130px,1fr))}
 }
 </style>
