@@ -1204,19 +1204,20 @@ const SCENARIO_GRID_ROWS=[
   "................",
   "..CC........ZZ.."
 ];
+const GRID_CLASS_BY_MARKER={H:'hot',C:'crew',Z:'zone'};
 
 function renderScenarioGrid(){
   const grid=document.getElementById('scenarioGrid');
   if(!grid)return;
-  grid.innerHTML='';
+  const fragment=document.createDocumentFragment();
   SCENARIO_GRID_ROWS.join('').split('').forEach(ch=>{
     const cell=document.createElement('span');
     cell.className='hero-cell';
-    if(ch==='H')cell.classList.add('hot');
-    if(ch==='C')cell.classList.add('crew');
-    if(ch==='Z')cell.classList.add('zone');
-    grid.appendChild(cell);
+    const mappedClass=GRID_CLASS_BY_MARKER[ch];
+    if(mappedClass)cell.classList.add(mappedClass);
+    fragment.appendChild(cell);
   });
+  grid.replaceChildren(fragment);
 }
 
 let totalRew=0,stepNum=0,lastHistLen=0;
