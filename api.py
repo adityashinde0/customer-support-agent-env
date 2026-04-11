@@ -80,7 +80,7 @@ def home():
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Support OpenEnv — AI Agent Playground</title>
+<title>Customer Support Command Center — OpenEnv Hackathon</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -235,7 +235,7 @@ nav{
   -webkit-text-stroke:3px var(--black);
   color:transparent;
 }
-.hero-title .fill-lime{color:var(--lime);-webkit-text-stroke:3px var(--black)}
+.hero-title .fill-cyan{color:var(--cyan);-webkit-text-stroke:0}
 .hero-title .fill-purple{color:var(--purple)}
 
 .hero-sub{
@@ -660,54 +660,192 @@ footer{
 .toast.ok{background:var(--cyan);color:var(--black)}
 .toast.err{background:var(--purple); color:#fff; border-color:var(--purple);}
 
-/* ── CUSTOM CURSOR ── */
-*{cursor:none!important}
-#cursor-dot{
-  position:fixed;width:8px;height:8px;border-radius:50%;
-  background:var(--purple);pointer-events:none;z-index:99999;
-  transform:translate(-50%,-50%);transition:transform .1s ease,background .3s;
-  box-shadow:0 0 10px var(--purple),0 0 20px rgba(168,85,247,0.5);
+/* ── MODERN HACKATHON THEME OVERRIDES ── */
+:root{
+  --bg:#070b14;
+  --panel:#0f172a;
+  --panel2:#111c33;
+  --line:#21314f;
+  --text:#e5edf8;
+  --muted:#9fb0ca;
+  --accent:#22d3ee;
+  --accent2:#a78bfa;
+  --good:#4ade80;
 }
-#cursor-ring{
-  position:fixed;width:36px;height:36px;border-radius:50%;
-  border:2px solid var(--purple);pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);
-  transition:width .3s var(--bounce),height .3s var(--bounce),border-color .3s,opacity .3s;
-  opacity:0.6;
+body{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34,211,238,.12), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(167,139,250,.14), transparent 40%),
+    var(--bg);
+  color:var(--text);
 }
-#cursor-trail{
-  position:fixed;width:80px;height:80px;border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,0.12) 0%,transparent 70%);
-  pointer-events:none;z-index:99997;
-  transform:translate(-50%,-50%);
-  transition:left .15s ease,top .15s ease;
+body::after{opacity:.02}
+nav{
+  background:rgba(7,11,20,.88);
+  border-bottom:1px solid var(--line);
 }
-body:has(a:hover) #cursor-ring,
-body:has(button:hover) #cursor-ring,
-body:has(select:hover) #cursor-ring{
-  width:56px;height:56px;border-color:var(--cyan);opacity:1;
+.nav-logo,.nav-tag,.hero-sub strong,.section-title,.task-name,.ac-name,.ce-title,.rtotal{color:var(--text)}
+.nav-logo span,.section-eyebrow,.hero-badge-dot,.rlog-title{color:var(--accent)}
+.nav-devs{
+  background:rgba(17,28,51,.85);
+  border-color:var(--accent2);
 }
-body:has(a:hover) #cursor-dot,
-body:has(button:hover) #cursor-dot,
-body:has(select:hover) #cursor-dot{
-  background:var(--cyan);
-  box-shadow:0 0 15px var(--cyan),0 0 30px rgba(0,243,255,0.6);
-  transform:translate(-50%,-50%) scale(1.5);
+.nav-tag{
+  background:rgba(34,211,238,.14);
+  color:var(--accent);
+  border:1px solid rgba(34,211,238,.45);
 }
-
+.nav-docs{
+  background:rgba(167,139,250,.15);
+  border:1px solid rgba(167,139,250,.45);
+  color:#ddd6fe;
+}
+.hero{
+  min-height:88vh;
+  padding-top:130px;
+}
+.hero-badge{
+  background:rgba(17,28,51,.75);
+  border:1px solid var(--line);
+  color:#c7d8f5;
+}
+.hero-title{
+  font-size:clamp(54px,10vw,118px);
+  text-shadow:0 10px 24px rgba(0,0,0,.4);
+}
+.hero-title .stroke{
+  -webkit-text-stroke:2px #93c5fd;
+}
+.hero-title .fill-purple{color:#c4b5fd}
+.hero-sub{color:#b7c7df;max-width:760px}
+.hero-actions .btn-hero{
+  border-radius:12px;
+  border:1px solid var(--line);
+}
+.btn-hero.primary{
+  background:linear-gradient(90deg,#0ea5e9,#7c3aed);
+  color:#fff;
+}
+.btn-hero.secondary{
+  background:rgba(15,23,42,.82);
+  color:#dbe7ff;
+}
+.hero-metrics{
+  margin:34px auto 0;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(130px,1fr));
+  gap:10px;
+  max-width:760px;
+}
+.metric{
+  background:linear-gradient(180deg,rgba(15,23,42,.86),rgba(17,28,51,.9));
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 12px;
+}
+.metric-k{
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.metric-v{
+  margin-top:6px;
+  font-size:20px;
+  font-weight:800;
+  color:#f8fbff;
+}
+.marquee-wrap,.tasks-section,.actions-section,.playground,.setup-section,footer{
+  border-color:var(--line);
+}
+.tasks-section,.playground{
+  background:transparent;
+}
+.task-card,.code-card,.pg-grid,.tkt,.kb-result,.action-card,.log-entry{
+  background:var(--panel);
+  border-color:var(--line);
+  color:var(--text);
+}
+.task-desc,.ac-desc,.ce-sub,.foot-text,.tkt-k,.prog-labels,.log-reward,.kb-ph,.c-cmt{color:var(--muted)}
+.task-tag{
+  border:1px solid var(--line);
+  color:#dbeafe;
+}
+.tag-easy,.tag-med,.tag-hard{
+  background:rgba(34,211,238,.12);
+}
+.actions-section{
+  background:transparent;
+}
+.ac-icon{
+  background:rgba(34,211,238,.14);
+}
+.pg-grid{
+  border-radius:16px;
+}
+.pg-left{
+  background:var(--panel2);
+  border-right:1px solid var(--line);
+}
+.pg-block{
+  border-bottom:1px solid var(--line);
+}
+.pg-right{
+  background:var(--panel);
+}
+.convo-area,.rlog,.history-log{
+  background:var(--panel);
+}
+.mtext{
+  background:rgba(17,28,51,.9);
+  border:1px solid var(--line);
+  color:#eaf2ff;
+}
+.mtext.sys{
+  background:rgba(148,163,184,.14);
+  color:#cbd5e1;
+}
+.rlog-head{
+  background:var(--panel2);
+  border-bottom:1px solid var(--line);
+}
+select,input[type=text]{
+  background:#0a1326;
+  border:1px solid var(--line);
+  color:#e6effc;
+}
+.btn-submit{
+  background:linear-gradient(90deg,#0ea5e9,#7c3aed);
+  border:0;
+}
+.bsm{
+  background:#0a1326;
+  border:1px solid var(--line);
+  color:#dbeafe;
+}
+.bsm.new{
+  background:rgba(74,222,128,.2);
+  border-color:rgba(74,222,128,.5);
+  color:#bbf7d0;
+}
+.setup-section{
+  background:transparent;
+}
+.code-head,footer{
+  background:var(--panel2);
+}
+.foot-logo{
+  color:#c4b5fd;
+}
+.foot-links a{color:#a5b4cc}
 @media(max-width:900px){
-  *{cursor:auto!important}
-  #cursor-dot,#cursor-ring,#cursor-trail{display:none}
+  .hero-metrics{grid-template-columns:repeat(2,minmax(130px,1fr))}
 }
 </style>
 </head>
 <body>
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<div id="cursor-trail"></div>
-
 <nav>
-  <div class="nav-logo">Customer Support <span>OpenEnv</span></div>
+  <div class="nav-logo">Customer Support <span>Command Center</span></div>
   <div class="nav-right">
     <div class="nav-devs">Developed by <span>Hrushikesh Sarode</span> & <span>Aditya Shinde</span></div>
     <span class="nav-tag">🟢 Live</span>
@@ -720,18 +858,24 @@ body:has(select:hover) #cursor-dot{
   <div class="hero-bg-blob blob2"></div>
   <div class="hero-bg-blob blob3"></div>
   <div class="hero-inner">
-    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · v1.0</div>
+    <div class="hero-badge"><div class="hero-badge-dot"></div> OpenEnv Hackathon · Live Environment</div>
     <h1 class="hero-title">
-      <span class="fill-purple">AI</span><br>
+      <span class="fill-purple">CUSTOMER</span><br>
       <span class="stroke">SUPPORT</span><br>
-      <span class="fill-lime">AGENT</span>
+      <span class="fill-cyan">COMMAND CENTER</span>
     </h1>
     <p class="hero-sub">
-      Train AI to handle <strong>real customer tickets</strong> — classify issues, search policy, read logs, and resolve or escalate. Shaped rewards. Sentiment scoring. No cap.
+      A clean, modern mission dashboard to train AI on <strong>real customer tickets</strong> with clear actions, live reward tracking, and policy-safe outcomes.
     </p>
     <div class="hero-actions">
-      <button class="btn-hero primary" onclick="document.getElementById('playground').scrollIntoView({behavior:'smooth'})">▶ Try It Now</button>
-      <button class="btn-hero secondary" onclick="document.getElementById('tasks').scrollIntoView({behavior:'smooth'})">See Tasks →</button>
+      <button class="btn-hero primary" onclick="document.getElementById('playground').scrollIntoView({behavior:'smooth'})">Launch Demo</button>
+      <button class="btn-hero secondary" onclick="document.getElementById('tasks').scrollIntoView({behavior:'smooth'})">View Mission Tasks</button>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric"><div class="metric-k">Tasks</div><div class="metric-v">6 Scenarios</div></div>
+      <div class="metric"><div class="metric-k">Actions</div><div class="metric-v">5 Controls</div></div>
+      <div class="metric"><div class="metric-k">Step Limit</div><div class="metric-v">10/Episode</div></div>
+      <div class="metric"><div class="metric-k">Target Score</div><div class="metric-v">0.90+</div></div>
     </div>
   </div>
 </section>
@@ -757,9 +901,9 @@ body:has(select:hover) #cursor-dot{
 
 <section class="tasks-section" id="tasks">
   <div class="section-header">
-    <div class="section-eyebrow">Difficulty Levels</div>
+    <div class="section-eyebrow">Mission Library</div>
     <div class="section-title">
-      <span class="">6 TASKS</span><br>
+      <span class="">6 TICKET MISSIONS</span><br>
       
     </div>
   </div>
@@ -805,8 +949,8 @@ body:has(select:hover) #cursor-dot{
 
 <section class="actions-section">
   <div class="section-header">
-    <div class="section-eyebrow">What The Agent Can Do</div>
-    <div class="section-title">5 ACTIONS.<br>ZERO HALLUCINATIONS.</div>
+    <div class="section-eyebrow">Control Panel</div>
+    <div class="section-title">5 CORE ACTIONS.<br>POLICY-FIRST EXECUTION.</div>
   </div>
   <div class="actions-grid">
     <div class="action-card">
@@ -1195,64 +1339,6 @@ function copyCode(btn,id){
     setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2000);
   });
 }
-
-// ── CUSTOM CURSOR ANIMATION ──
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const trail = document.getElementById('cursor-trail');
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
-
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left = mouseX + 'px';
-  dot.style.top = mouseY + 'px';
-  trail.style.left = mouseX + 'px';
-  trail.style.top = mouseY + 'px';
-});
-
-// Ring follows with smooth lag
-(function animateRing(){
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  ring.style.left = ringX + 'px';
-  ring.style.top = ringY + 'px';
-  requestAnimationFrame(animateRing);
-})();
-
-// Click burst effect
-document.addEventListener('click', e => {
-  const burst = document.createElement('div');
-  burst.style.cssText = `
-    position:fixed;left:${e.clientX}px;top:${e.clientY}px;
-    width:4px;height:4px;border-radius:50%;pointer-events:none;z-index:99999;
-    transform:translate(-50%,-50%);background:var(--purple);
-  `;
-  document.body.appendChild(burst);
-  const colors = ['#a855f7','#00f3ff','#c8ff00'];
-  for(let i=0;i<8;i++){
-    const p = document.createElement('div');
-    const angle = (i/8)*Math.PI*2;
-    const dist = 30 + Math.random()*25;
-    const color = colors[Math.floor(Math.random()*colors.length)];
-    p.style.cssText = `
-      position:fixed;width:5px;height:5px;border-radius:50%;
-      pointer-events:none;z-index:99999;background:${color};
-      left:${e.clientX}px;top:${e.clientY}px;
-      transform:translate(-50%,-50%);
-      transition:all 0.5s ease-out;opacity:1;
-    `;
-    document.body.appendChild(p);
-    setTimeout(()=>{
-      p.style.left=(e.clientX+Math.cos(angle)*dist)+'px';
-      p.style.top=(e.clientY+Math.sin(angle)*dist)+'px';
-      p.style.opacity='0';
-      p.style.transform='translate(-50%,-50%) scale(0)';
-    },10);
-    setTimeout(()=>p.remove(),550);
-  }
-  setTimeout(()=>burst.remove(),100);
-});
 
 toggleFields();
 </script>
