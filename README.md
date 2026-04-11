@@ -65,6 +65,7 @@ It is designed for agent training/evaluation in a realistic business domain, not
 - `knowledge_base_result: Optional[str]`
 - `conversation_history: List[str]`
 - `step_count: int`
+- `user_sentiment: Literal["Happy", "Neutral", "Frustrated", "Angry"]`
 - `is_resolved: bool`
 - `last_action_error: Optional[str]`
 

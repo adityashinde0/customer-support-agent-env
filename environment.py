@@ -1,10 +1,30 @@
 import json
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Literal
 from models import Observation, Action, Reward
 from grader import evaluate_performance
 
 # All 6 task keys in a fixed, deterministic order
 TASK_ORDER = ["easy", "medium", "hard", "hard1", "medium1", "hard2"]
+SENTIMENT_ANGRY_KEYWORDS = (
+    "angry", "terrible", "demand", "refund right now", "bad review",
+    "immediately", "blocked", "outrageous", "useless",
+)
+SENTIMENT_FRUSTRATED_KEYWORDS = (
+    "broken", "error code 404", "404", "blank", "white screen",
+    "not working", "failed", "can't", "cannot", "please just fix",
+)
+SENTIMENT_HAPPY_KEYWORDS = ("thanks", "thank you", "great", "awesome", "perfect", "appreciate")
+
+def _detect_sentiment_from_text(text: str) -> Literal["Happy", "Neutral", "Frustrated", "Angry"]:
+    """Deterministic keyword-based sentiment detector returning Happy/Neutral/Frustrated/Angry."""
+    content = (text or "").lower()
+    if any(k in content for k in SENTIMENT_ANGRY_KEYWORDS):
+        return "Angry"
+    if any(k in content for k in SENTIMENT_FRUSTRATED_KEYWORDS):
+        return "Frustrated"
+    if any(k in content for k in SENTIMENT_HAPPY_KEYWORDS):
+        return "Happy"
+    return "Neutral"
 
 class CustomerSupportEnv:
     """The main OpenEnv-compliant environment."""
@@ -28,7 +48,8 @@ class CustomerSupportEnv:
         self.obs = Observation(
             ticket_id=self.current_task["ticket_id"],
             customer_tier=self.current_task["customer_tier"],
-            conversation_history=[f"Customer: {self.current_task['initial_message']}"]
+            conversation_history=[f"Customer: {self.current_task['initial_message']}"],
+            user_sentiment=_detect_sentiment_from_text(self.current_task["initial_message"])
         )
         return self.obs
 
@@ -70,6 +91,9 @@ class CustomerSupportEnv:
         elif action.action_type == "ask_clarifying_question" and self.obs.last_action_error is None:
             self.obs.conversation_history.append(f"Agent: {action.message_to_customer}")
             self.obs.conversation_history.append("Customer: Please just fix my issue based on my first message.")
+            self.obs.user_sentiment = _detect_sentiment_from_text(
+                "Please just fix my issue based on my first message."
+            )
             reward_val = 0.01
             reward_reason = "In-range reward: Asked a clarifying question."
 
