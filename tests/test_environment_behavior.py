@@ -61,12 +61,15 @@ class TestEnvironmentBehavior(unittest.TestCase):
 
     def test_sentiment_is_detected_from_customer_messages(self):
         obs = self.env.reset()  # easy
+        self.assertEqual(obs.ticket_id, "TKT-101")
         self.assertEqual(obs.user_sentiment, "Neutral")
 
         obs = self.env.reset()  # medium: broken + error 404
+        self.assertEqual(obs.ticket_id, "TKT-202")
         self.assertEqual(obs.user_sentiment, "Frustrated")
 
         obs = self.env.reset()  # hard: hostile refund demand
+        self.assertEqual(obs.ticket_id, "TKT-303")
         self.assertEqual(obs.user_sentiment, "Angry")
 
 
