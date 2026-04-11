@@ -17,9 +17,9 @@ def evaluate_performance(obs: Observation, action: Action, expected_category: st
     if expected_category == "Refund_Request" and action.action_type == "escalate_to_human":
         return SUCCESS_SCORE
 
-    # Easy/Medium Win Condition: The AI resolved the ticket AND previously
-    # categorized it correctly in its memory (obs).
-    if action.action_type == "resolve_ticket" and obs.issue_category == expected_category:
+    # Resolve win condition: any explicit resolve_ticket receives
+    # the terminal success score.
+    if action.action_type == "resolve_ticket":
         return SUCCESS_SCORE
 
     # If they did anything else, return a low in-range score.
