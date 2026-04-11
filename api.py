@@ -919,7 +919,7 @@ select,input[type=text]{
       <div class="task-num">01</div>
       <div class="task-tag tag-easy">Easy</div>
       <div class="task-name">Billing Receipt Request</div>
-      <div class="task-desc">Classify as Billing, optionally verify policy via <code>search_kb</code>, then resolve clearly.</div>
+      <div class="task-desc">Classify as Billing, optionally verify policy via search_kb, then resolve clearly.</div>
     </div>
     <div class="task-card">
       <div class="task-num">02</div>
@@ -1150,6 +1150,7 @@ function toggleFields(){
 }
 
 function getTerminalHint(obs){
+  // Show the most useful terminal scoring tip from current state.
   const category=(obs&&typeof obs==='object'&&typeof obs.issue_category==='string')?obs.issue_category:'';
   if(category==='Refund_Request'){
     return 'Refund_Request tasks usually need escalate_to_human for a 0.90 terminal score.';
@@ -1318,7 +1319,7 @@ async function refreshState(){
 async function submitAction(){
   const a=document.getElementById('actionType').value;
   const payload={action_type:a};
-  const categoryGuess=document.getElementById('catGuess').value;
+  const categoryGuess=(document.getElementById('catGuess').value||'').trim();
   const searchQuery=(document.getElementById('searchQ').value||'').trim();
   const messageToCustomer=(document.getElementById('msgInput').value||'').trim();
   if(a==='classify_issue') payload.category_guess=categoryGuess;
