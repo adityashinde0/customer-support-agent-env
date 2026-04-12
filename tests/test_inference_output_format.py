@@ -15,9 +15,10 @@ import inference  # noqa: E402
 
 class TestInferenceOutputFormat(unittest.TestCase):
     def _mock_create(self, **kwargs):
-        user_content = kwargs["messages"][1]["content"]
-        obs_json = user_content.replace("Current Observation: ", "", 1)
-        obs = json.loads(obs_json)
+        user_content = kwargs["messages"][-1]["content"]
+        match = re.search(r"Current state: (\{.*\})", user_content)
+        self.assertIsNotNone(match, "user prompt missing 'Current state: {...}' section")
+        obs = json.loads(match.group(1))
 
         if not obs.get("issue_category"):
             action = {"action_type": "classify_issue", "category_guess": "Billing"}
