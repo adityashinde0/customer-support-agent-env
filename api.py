@@ -963,12 +963,12 @@ select,input[type=text]{
     <div class="action-card">
       <div class="ac-icon">🏷️</div>
       <div class="ac-name">classify_issue</div>
-      <div class="ac-desc">Tag the ticket type first: Billing, Technical, or Refund_Request. This is a setup action worth +0.01.</div>
+      <div class="ac-desc">Tag the ticket type first: Billing, Technical, or Refund_Request. Correct classification earns +0.03; incorrect earns +0.01.</div>
     </div>
     <div class="action-card">
       <div class="ac-icon">📚</div>
       <div class="ac-name">search_kb</div>
-      <div class="ac-desc">Query the knowledge base with keywords. Returns the exact policy the agent needs to follow.</div>
+      <div class="ac-desc">Query the knowledge base with keywords. Returns the exact policy the agent needs to follow. Relevant query earns +0.05; off-target earns +0.02.</div>
     </div>
     <div class="action-card">
       <div class="ac-icon">💬</div>
@@ -988,7 +988,7 @@ select,input[type=text]{
     <div class="action-card" style="background:rgba(168, 85, 247,.08)">
       <div class="ac-icon">⚡</div>
       <div class="ac-name">Reward Signal</div>
-      <div class="ac-desc">Classify/search/question actions give +0.01. You only get +0.90 after a correct terminal action before step 10.</div>
+      <div class="ac-desc">Graduated rewards: ask_clarifying_question +0.01 · classify_issue +0.01/+0.03 · search_kb +0.02/+0.05 · correct terminal action +0.90 before step 10.</div>
     </div>
   </div>
 </section>
@@ -1155,7 +1155,7 @@ function getTerminalHint(obs){
   if(category==='Refund_Request'){
     return 'Refund_Request tasks usually need escalate_to_human for a 0.90 terminal score.';
   }
-  return 'Classify/search actions are +0.01. Use resolve_ticket before step 10 for 0.90.';
+  return 'classify_issue +0.01/+0.03 · search_kb +0.02/+0.05 · ask +0.01. Use a correct terminal action before step 10 for +0.90.';
 }
 
 function showToast(msg,type=''){
