@@ -5,6 +5,12 @@ from grader import evaluate_performance
 
 # All 6 task keys in a fixed, deterministic order
 TASK_ORDER = ["easy", "medium", "hard", "hard1", "medium1", "hard2"]
+_EXPECTED_KB_MAP = {
+    "Billing": "policy_billing",
+    "Technical": "policy_technical",
+    "Refund_Request": "policy_refund",
+}
+
 SENTIMENT_ANGRY_KEYWORDS = (
     "angry", "terrible", "demand", "refund right now", "bad review",
     "immediately", "blocked", "outrageous", "useless",
@@ -80,12 +86,22 @@ class CustomerSupportEnv:
             query = (action.search_query or "").lower()
             if "billing" in query or "receipt" in query:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_billing"]
+                kb_key = "policy_billing"
             elif "error" in query or "404" in query or "technical" in query or "dashboard" in query:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_technical"]
+                kb_key = "policy_technical"
             else:
                 self.obs.knowledge_base_result = self.db["knowledge_base"]["policy_refund"]
-            reward_val = 0.01
-            reward_reason = "In-range reward: Successfully queried the knowledge base."
+                kb_key = "policy_refund"
+            expected_kb_map = _EXPECTED_KB_MAP
+            expected_kb = expected_kb_map.get(self.current_task["expected_category"], "")
+            found_relevant_kb = (kb_key == expected_kb)
+            if found_relevant_kb:
+                reward_val = 0.05
+                reward_reason = "In-range reward: Searched the knowledge base with a relevant query."
+            else:
+                reward_val = 0.02
+                reward_reason = "In-range reward: Searched the knowledge base with an off-target query."
 
         # Logic for asking a question
         elif action.action_type == "ask_clarifying_question" and self.obs.last_action_error is None:
@@ -101,7 +117,7 @@ class CustomerSupportEnv:
         elif action.action_type == "classify_issue" and self.obs.last_action_error is None:
             self.obs.issue_category = action.category_guess
             if action.category_guess == self.current_task["expected_category"]:
-                reward_val = 0.01
+                reward_val = 0.03
                 reward_reason = "In-range reward: Correctly classified the issue."
             else:
                 reward_val = 0.01

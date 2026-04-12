@@ -89,20 +89,30 @@ def run_baseline():
 
         print(f"[START] task={task_name} env={BENCHMARK} model={MODEL_NAME}", flush=True)
         try:
+            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
             while not done and step_count < 10:
-                user_prompt = f"Current Observation: {obs.model_dump_json()}"
+                conversation_context = "\n".join(obs.conversation_history[-5:])
+                context_section = (
+                    f"Previous conversation:\n{conversation_context}\n\n"
+                    if conversation_context
+                    else "Previous conversation: (none yet)\n\n"
+                )
+                user_prompt = (
+                    f"{context_section}"
+                    f"Current state: {obs.model_dump_json()}\n\n"
+                    "What is your next action?"
+                )
+                messages.append({"role": "user", "content": user_prompt})
 
                 response = client.chat.completions.create(
                     model=MODEL_NAME,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": user_prompt}
-                    ],
+                    messages=messages,
                     response_format={"type": "json_object"},
                     temperature=0.1
                 )
 
                 action_json = json.loads(response.choices[0].message.content)
+                messages.append({"role": "assistant", "content": response.choices[0].message.content})
                 action_obj = Action(**action_json)
                 action_str = _action_to_str(action_json)
 
